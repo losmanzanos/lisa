@@ -1,17 +1,24 @@
-Move the motif clip off the text boxes entirely
+Drop the ring motif from the page headers
 
-The previous fix bought descender room with bottom padding, which worked but
-left the ink a few pixels from a clip edge and depended on a tuned number
-holding at every viewport.
+It read as a stray partial circle rather than as the mandala, and it crowded
+the standfirst in the right column. The ring already does its job at the foot
+of the page where it is labelled and clickable, so the header does not need a
+faint echo of it. The quote bands keep theirs, where it sits low on a dark
+field and stays out of the way.
 
-The motif now sits in its own absolutely positioned clipping layer inside
-the page head and the band, so the elements that contain text no longer clip
-at all. Shearing a descender is structurally impossible now rather than
-avoided by margin. The compensating padding and rule margin are reverted, so
-spacing returns to the original rhythm.
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01YGYSVtWTZ1J8axa2WJfZPB
 
-Verified: page head computes overflow visible, descenders render whole, the
-motif is still contained and does not spill over the site header.
+Keep the preview out of search until launch
+
+Adds a NOINDEX switch at the top of tools/build.py, on by default, which
+writes noindex, nofollow onto every page. Lisa's Wix site is still the live
+brilliantlysane.org, so an indexable copy of her name and copy on a second
+domain would compete with it.
+
+Deliberately not blocking robots.txt as well: a crawler that is disallowed
+never reads the meta tag, and the bare URL can still be listed. Letting them
+crawl and telling them not to index is the combination that actually works.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01YGYSVtWTZ1J8axa2WJfZPB

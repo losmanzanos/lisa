@@ -53,23 +53,28 @@ tools/                  page generator
 
 ## Before launch
 
-1. **Domain.** `SITE` at the top of `tools/build.py` is set to the GitHub Pages
+1. **Search visibility.** `NOINDEX` at the top of `tools/build.py` is `True`,
+   which puts `noindex, nofollow` on every page so the preview stays out of
+   search while brilliantlysane.org is still live on Wix. Set it to `False`
+   and rebuild at launch. Do not also block crawling in robots.txt: a blocked
+   crawler never reads the tag, and the bare URL can still get listed.
+2. **Domain.** `SITE` at the top of `tools/build.py` is set to the GitHub Pages
    URL. Change it to `https://www.brilliantlysane.org`, rerun
    `python3 tools/content.py`, and rebuild the homepage. That one constant drives
    every canonical tag, Open Graph URL, the sitemap and llms.txt.
-2. **EmailJS.** Three placeholder strings at the top of `assets/contact.js`.
+3. **EmailJS.** Three placeholder strings at the top of `assets/contact.js`.
    Until they are replaced the form validates, then tells the visitor to call or
    email instead, so it never fails silently.
-3. **Confirm with Lisa.** There is a `TODO` comment in `tools/content.py` on the
+4. **Confirm with Lisa.** There is a `TODO` comment in `tools/content.py` on the
    rates section: cancellation window, accepted payment methods, and whether she
    issues superbills for out of network clients. Nothing on the site currently
    claims any of those.
-4. **Journal posts** are written in Lisa's voice as stand-ins. They should be
+5. **Journal posts** are written in Lisa's voice as stand-ins. They should be
    replaced with or approved by her before launch.
-5. **Photography.** The only photograph on the site is Lisa's portrait at the
+6. **Photography.** The only photograph on the site is Lisa's portrait at the
    center of the rings. The quote bands are typographic on purpose. If real
    Boulder or Flatirons imagery turns up later it can drop into `.band`.
-6. **Search Console and Bing Webmaster Tools** verification, then submit
+7. **Search Console and Bing Webmaster Tools** verification, then submit
    `sitemap.xml` manually. Google Business Profile after that.
 
 ## Facts the copy relies on

@@ -8,6 +8,12 @@
 import os, re, html, json, datetime
 
 SITE = "https://losmanzanos.github.io/lisa"   # swap to https://www.brilliantlysane.org at launch
+
+# Keeps the preview out of search while Lisa's Wix site is still the live one.
+# Set to False at launch and rebuild. Note: do NOT also disallow crawling in
+# robots.txt, because a blocked crawler never reads this tag and the URL can
+# still surface. Let them crawl, and tell them not to index.
+NOINDEX = True
 NAME = "Brilliantly Sane"
 WHO  = "Lisa Wallace, LPC"
 TEL  = "970-368-9185"
@@ -68,6 +74,7 @@ def head(p):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{html.escape(p['title'])}</title>
 <meta name="description" content="{html.escape(p['desc'])}">
+{'<meta name="robots" content="noindex, nofollow">' if NOINDEX else ''}
 <link rel="canonical" href="{url}">
 <meta property="og:type" content="{p.get('ogtype','website')}">
 <meta property="og:site_name" content="{NAME}">
@@ -155,11 +162,9 @@ def footer(p):
 
 
 def page_head_block(p):
-    motif = MOTIF % rel(p["depth"], "assets/")
     sf = f'<p class="standfirst">{p["standfirst"]}</p>' if p.get("standfirst") else ""
     return f"""<main id="main">
 <div class="page-head">
-  <div class="motif-layer">{motif}</div>
   <div>
     <p class="eyebrow">{p['eyebrow']}</p>
     <h1>{p['h1']}</h1>

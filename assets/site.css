@@ -168,10 +168,8 @@ h1 em{font-style:italic;color:var(--copper-deep)}
    Drawn from the homepage mandala geometry. Used instead of stock imagery
    so interior pages carry the brand rather than someone else's photograph. */
 .motif-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.page-head > div:not(.motif-layer),.page-head .standfirst{position:relative;z-index:1}
 .motif{position:absolute;pointer-events:none;color:var(--ink);opacity:.10;width:clamp(240px,34vw,460px);aspect-ratio:1}
 .page-head{position:relative}
-.page-head .motif{right:-13%;top:-62%;opacity:.07;width:clamp(260px,30vw,420px)}
 .band{position:relative}
 .band .motif{color:#fff;opacity:.09;left:-9%;bottom:-46%;width:clamp(260px,30vw,420px)}
 .band .inner{position:relative;z-index:2}
@@ -191,7 +189,6 @@ h1 em{font-style:italic;color:var(--copper-deep)}
   margin-top:14px;max-width:34ch;line-height:1.7}
 @media (max-width:1000px){
   .portrait-fig img{max-width:300px}
-  .page-head .motif{opacity:.06;top:-14%;width:300px}
 }
 @media (max-width:760px){
   .portrait-fig img{max-width:100%}
