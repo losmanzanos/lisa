@@ -1,0 +1,18 @@
+Move the motif clip off the text boxes entirely
+
+The previous fix bought descender room with bottom padding, which worked but
+left the ink a few pixels from a clip edge and depended on a tuned number
+holding at every viewport.
+
+The motif now sits in its own absolutely positioned clipping layer inside
+the page head and the band, so the elements that contain text no longer clip
+at all. Shearing a descender is structurally impossible now rather than
+avoided by margin. The compensating padding and rule margin are reverted, so
+spacing returns to the original rhythm.
+
+Verified: page head computes overflow visible, descenders render whole, the
+motif is still contained and does not spill over the site header.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01YGYSVtWTZ1J8axa2WJfZPB
+

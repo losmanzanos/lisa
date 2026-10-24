@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Housekeeping
+Disallow: /tools/
+
+Sitemap: https://losmanzanos.github.io/lisa/sitemap.xml
