@@ -176,12 +176,12 @@
       var a1 = ring.start + (i + 1) * step - ring.gap;
       var mid = (a0 + a1) / 2, rad = mid * Math.PI / 180;
       var id = ring.key + '-' + i;
-      SEGMAP[id] = Object.assign({}, s, { eyebrow: ring.eyebrow, swatch: s.fill });
+      SEGMAP[id] = Object.assign({}, s, { eyebrow: ring.eyebrow, swatch: s.fill, ring: ring.cls });
 
       var g = el('g', {
         'class': 'seg ' + ring.cls, tabindex: '0', role: 'link', 'data-id': id,
         'aria-label': s.label + '. ' + s.title,
-        style: '--tx:' + (Math.cos(rad) * 7).toFixed(2) + 'px;--ty:' + (Math.sin(rad) * 7).toFixed(2) + 'px'
+        style: '--tx:' + (Math.cos(rad) * 7).toFixed(2) + 'px;--ty:' + (Math.sin(rad) * 7).toFixed(2) + 'px' + ';--i:' + (ring.cls === 'out' ? i + 4 : i)
       });
       g.appendChild(el('path', {
         'class': 'slice', d: annulus(a0, a1, ring.rIn, ring.rOut), fill: s.fill,
@@ -250,6 +250,7 @@
 
   /* ---------- interaction ---------- */
   var stage = document.getElementById('stage');
+  var wrap = stage.parentNode;
   var readout = document.getElementById('readout');
   var roE = document.getElementById('roEyebrow'), roT = document.getElementById('roTitle');
   var roX = document.getElementById('roText'), roC = document.getElementById('roCta');
@@ -263,11 +264,13 @@
     roX.textContent = d.tease;
     readout.classList.add('live');
     stage.classList.add('focus');
+    wrap.setAttribute('data-ring', d.ring || 'core');
   }
   function clearRead() {
     active = null;
     readout.classList.remove('live');
     stage.classList.remove('focus');
+    wrap.removeAttribute('data-ring');
   }
 
   function openPanel(d) {

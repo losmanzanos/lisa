@@ -11,6 +11,7 @@ HOME_BODY = """<main id="main">
 
 <div class="stage-wrap">
   <p class="words words-top">Our actual agency and power lies in our ability to choose how we want to relate to ourselves and the world.</p>
+  <p class="mid-words mid-top">Contemplative Psychotherapy starts with the premise that we are all basically sane: in other words, we are all basically okay.</p>
   <div class="stage" id="stage">
     <div class="orbit" aria-hidden="true"></div>
     <svg class="rings" id="ringSvg" viewBox="-52 -52 504 504" role="group" aria-label="Ring navigation"></svg>
@@ -31,11 +32,13 @@ HOME_BODY = """<main id="main">
       </span>
     </button>
   </div>
+  <p class="mid-words mid-bot">The issue is not us, rather it&rsquo;s because of factors outside of our control (societal expectations and dominant norms, trauma, upbringing, life circumstances) that we might not always believe this.</p>
   <p class="words words-bot">True healing begins when we recognize what is in our control and that starts with the relationship with ourselves.</p>
 </div>
 
 <div class="readout" id="readout">
   <div class="ro-idle">
+    <p class="center-words">At the center of my practice is my commitment to help people fall in love with themselves, and, in doing so, fall in love with the world. I am qualified to do so only in so far as I have taken this journey myself. I welcome the opportunity to walk with you as you discover who you are and were always meant to be.</p>
     <p class="hint" id="hint">Hover a segment, click to learn more</p>
     <div class="legend">
       <span><i style="background:#5A4C44"></i>01 &middot; The Practical</span>
