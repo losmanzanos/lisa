@@ -92,8 +92,23 @@ svg.rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .sk p{margin:0;font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.4;text-wrap:balance}
 .sk0 p{color:#5E4636}
 .sk1 p{color:#4A3B66;font-weight:500}
-.sk2 p{font-style:normal;font-size:20px;line-height:1.45;color:var(--ink);text-wrap:pretty;
-  background:radial-gradient(ellipse at 50% 40%,#F7F3EF,#E9E1DA);padding:30px 26px;border-radius:28px}
+/* the center: full bleed and nearly full height, over the same mountain
+   as the About Me disc, so scrolling to the center of her words lands you
+   in the center of the wheel */
+.sk.sk2{width:100vw;margin-left:calc(50% - 50vw);min-height:max(86vh,780px);min-height:max(86svh,780px);
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:72px calc(var(--gut) + 6px) 64px;
+  background:linear-gradient(180deg,rgba(40,18,4,.1),rgba(40,18,4,.12) 30%,rgba(40,18,4,.72) 52%,rgba(30,13,3,.93)),
+    url(img/lake-1600.jpg) 49% 64%/auto 150% no-repeat;background-color:#3A2A20;color:#F6EFE8}
+.sk.sk2::after{display:none}
+.sk.sk2+.sk{margin-top:44px}
+.sk1:has(+.sk2)::after{margin-bottom:44px}
+.sk2 .ri{margin-bottom:26px}
+.sk2 .ri circle{stroke:rgba(246,239,232,.28)}
+.sk2 .ri .r2{fill:rgba(246,239,232,.2)}
+.sk2 .ri .r2.lit{fill:#F6EFE8}
+.sk2 p{max-width:30ch;font-style:normal;font-size:21px;line-height:1.5;color:#F6EFE8;text-wrap:pretty;
+  text-shadow:0 1px 18px rgba(20,8,2,.5)}
+.sk2 p::after{content:"";display:block;width:40px;height:1px;margin:30px auto 0;background:rgba(246,239,232,.45)}
 .sk{transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .sketch.js .sk:not(.in){opacity:0;transform:translateY(14px)}
 

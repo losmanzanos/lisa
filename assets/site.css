@@ -183,17 +183,15 @@ h1 em{font-style:italic;color:var(--copper-deep)}
   background:linear-gradient(104deg,rgba(42,29,20,.93) 0%,rgba(42,29,20,.80) 52%,rgba(42,29,20,.70) 100%)}
 .band.has-img .motif{opacity:.13}
 
-/* ---------- portrait figure ---------- */
-.portrait-fig{margin:0 0 6px}
-.portrait-fig img{width:100%;max-width:340px;border:1px solid var(--rule)}
-.portrait-fig figcaption{text-wrap:balance;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-50);
-  margin-top:14px;max-width:34ch;line-height:1.7}
-@media (max-width:1000px){
-  .portrait-fig img{max-width:300px}
-}
-@media (max-width:760px){
-  .portrait-fig img{max-width:100%}
-}
+/* ---------- portrait figure ----------
+   Small and round, ringed in copper like the logo, with the caption set
+   beside it. Present without being the loudest thing on the page. */
+.portrait-fig{display:flex;align-items:center;gap:clamp(18px,3vw,28px);margin:0 0 clamp(22px,3vw,30px)}
+.portrait-fig picture{flex:none;margin-left:7px}
+.portrait-fig img{display:block;width:clamp(116px,13vw,168px);height:auto;aspect-ratio:1;object-fit:cover;border-radius:50%;
+  border:0;box-shadow:0 0 0 1px var(--copper),0 0 0 6px var(--cream),0 0 0 7px var(--rule);filter:saturate(.9)}
+.portrait-fig figcaption{text-wrap:balance;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-50);
+  margin:0;max-width:22ch;line-height:1.8}
 
 /* ---------- forms ---------- */
 .form{display:grid;gap:22px;max-width:620px}
