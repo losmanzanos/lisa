@@ -279,7 +279,7 @@ def ringnav(p):
     core = (f'<a href="{rel(d, chref)}" class="nseg c{" on" if con else ""}" data-k="about" '
             f'aria-label="{clabel}"><title>{clabel}</title>'
             f'<circle cx="200" cy="200" r="74" fill="#EDE7E1"/>'
-            f'<image href="{a}img/lisa.jpg" x="126" y="126" width="148" height="148" '
+            f'<image href="{a}img/center-peak.jpg" x="126" y="126" width="148" height="148" '
             f'clip-path="circle(74px at 74px 74px)" preserveAspectRatio="xMidYMid slice"/>'
             f'<circle cx="200" cy="200" r="74" fill="none" stroke="rgba(65,30,6,.18)"/></a>')
     items.append(("c", "about", chref, clabel, con))

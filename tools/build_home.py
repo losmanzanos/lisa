@@ -9,19 +9,34 @@ HOME_BODY = """<main id="main">
   <p class="sub">Every segment is a door. The outer ring answers the practical questions, the middle ring is about you, and the center is where the work actually happens.</p>
 </section>
 
-<div class="stage-wrap">
+<div class="stage-wrap" id="stageWrap">
+  <div class="mandala" id="mandala">
+    <div class="m-ring m-outer">
+      <p class="m-txt">Our actual agency and power lies in our ability to choose how we want to relate to ourselves and the world.</p>
+      <div class="m-ring m-mid">
+        <p class="m-txt">Contemplative Psychotherapy starts with the premise that we are all basically sane: in other words, we are all basically okay.</p>
+        <div class="m-ring m-core">
+          <p>At the center of my practice is my commitment to help people fall in love with themselves, and, in doing so, fall in love with the world. I am qualified to do so only in so far as I have taken this journey myself.</p>
+          <p>I welcome the opportunity to walk with you as you discover who you are and were always meant to be.</p>
+        </div>
+        <p class="m-txt">The issue is not us, rather it&rsquo;s because of factors outside of our control (societal expectations and dominant norms, trauma, upbringing, life circumstances) that we might not always believe this.</p>
+      </div>
+      <p class="m-txt">True healing begins when we recognize what is in our control and that starts with the relationship with ourselves.</p>
+    </div>
+  </div>
+
   <div class="stage" id="stage">
     <div class="orbit" aria-hidden="true"></div>
     <svg class="rings" id="ringSvg" viewBox="0 0 400 400" role="group" aria-label="Ring navigation"></svg>
-    <button class="core" id="core" aria-label="Meet Lisa Wallace, the center of the practice">
+    <button class="core" id="core" aria-label="About me, Lisa Wallace, the center of the practice">
       <span class="faces">
         <span class="face front">
           <picture>
-            <source srcset="assets/img/lisa.webp" type="image/webp">
-            <img class="portrait" src="assets/img/lisa.jpg" width="640" height="640" alt="Lisa Wallace smiling in a knit cap and dark glasses, one hand raised in a wave.">
+            <source srcset="assets/img/center-peak.webp" type="image/webp">
+            <img class="portrait" src="assets/img/center-peak.jpg" width="640" height="640" alt="">
           </picture>
           <span class="veil"></span>
-          <span class="plate"><span class="nm">Lisa</span><span class="rl">The Center</span></span>
+          <span class="plate"><span class="nm">About Me</span><span class="rl">Lisa Wallace, LPC</span></span>
         </span>
         <span class="face back">
           <span class="q">&ldquo;Help people fall in love with themselves, and, in doing so, fall in love with the world.&rdquo;</span>
@@ -34,12 +49,14 @@ HOME_BODY = """<main id="main">
 
 <div class="readout" id="readout">
   <div class="ro-idle">
-    <p class="hint">Hover a segment, click to learn more</p>
+    <button class="m-open" id="mOpen">Open the circle</button>
+    <p class="hint" id="hint">Hover a segment, click to learn more</p>
     <div class="legend">
       <span><i style="background:#5A4C44"></i>01 &middot; The Practical</span>
       <span><i style="background:#C4C2E5"></i>02 &middot; Who This Is For</span>
-      <span><i style="background:#CABFB6"></i>The Center &middot; Lisa</span>
+      <span><i style="background:#CABFB6"></i>The Center &middot; About Me</span>
     </div>
+    <button class="m-back" id="mBack">&larr; Back to the words</button>
   </div>
   <div class="ro-live">
     <p class="ro-eyebrow" id="roEyebrow"></p>
@@ -83,7 +100,7 @@ HOME_BODY = """<main id="main">
     <ul class="bits" id="pBits"></ul>
   </div>
   <div class="panel-foot">
-    <a class="tlink" href="/contact/" id="pCta">Learn more &rarr;</a>
+    <a class="tlink" href="contact/" id="pCta">Learn more &rarr;</a>
     <span class="note" id="pNote"></span>
   </div>
 </div>

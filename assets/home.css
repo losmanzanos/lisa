@@ -6,8 +6,53 @@
 .lede .sub{max-width:46ch;margin:14px auto 0;font-size:clamp(13.5px,1.55vw,16px);line-height:1.62;color:var(--ink-70)}
 
 /* ---------- stage ---------- */
-.stage-wrap{position:relative;z-index:10;display:flex;justify-content:center;padding:clamp(26px,4vw,46px) 12px 0}
-.stage{--s:min(50vh,56vw,520px);position:relative;width:var(--s);height:var(--s)}
+/* The words layer and the ring share one grid cell and swap in place. */
+.stage-wrap{position:relative;z-index:10;display:grid;place-items:center;padding:clamp(26px,4vw,46px) 12px 0}
+.stage-wrap>*{grid-area:1/1}
+.stage{--s:min(68vh,62vw,660px);position:relative;width:var(--s);height:var(--s)}
+
+/* ---------- layer one: Lisa's words set in the rings ----------
+   Sized by its text rather than a fixed circle, so it reads as the wide
+   oval of Lisa's sketch on desktop and a tall one on a phone. */
+.mandala{--m:min(94vw,1040px);width:var(--m);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.m-ring{border-radius:50%;display:flex;flex-direction:column;align-items:center;text-align:center}
+.m-ring p{margin:0;text-wrap:balance}
+.m-outer{background:#5E5048;color:#F3ECE6;padding:46px 0 50px;
+  box-shadow:0 34px 70px -40px rgba(65,30,6,.6);transition:transform .6s var(--ease)}
+.m-mid{width:84%;margin:20px 0;background:#C6C4E4;color:#4A2A12;padding:44px 0 46px}
+.m-core{width:66%;margin:20px 0;background:radial-gradient(circle at 50% 40%,#F6F2EE,#DCD3CB);color:var(--ink);
+  padding:52px 0 56px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
+.m-txt{font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.32}
+.m-outer>.m-txt{max-width:48%}
+.m-mid>.m-txt{max-width:56%;font-weight:500}
+.m-core p{max-width:76%;font-family:var(--serif);font-size:19.5px;line-height:1.36;font-weight:500}
+.m-core p+p{margin-top:.55em}
+.mandala:hover .m-outer{transform:scale(1.008)}
+
+/* The layer not in view is lifted out of the flow so the page height
+   follows whichever one is showing. */
+.mandala,.stage{transition:opacity .7s var(--ease),transform .9s var(--ease),visibility 0s linear 0s}
+.stage{position:absolute;top:clamp(26px,4vw,46px);left:50%;
+  opacity:0;visibility:hidden;transform:translateX(-50%) scale(.88);pointer-events:none}
+body.opened .stage{position:relative;top:auto;left:auto;opacity:1;visibility:visible;transform:none;pointer-events:auto}
+body.opened .mandala{position:absolute;top:clamp(26px,4vw,46px);left:50%;
+  opacity:0;visibility:hidden;transform:translateX(-50%) scale(1.04);pointer-events:none;
+  transition:opacity .45s var(--ease),transform .7s var(--ease),visibility 0s linear .7s}
+body:not(.ready) .mandala,body:not(.ready) .stage,body:not(.ready) .seg{transition:none!important}
+/* segments arrive one at a time, middle ring first */
+body.opened .seg{transition-delay:calc(var(--i)*55ms + 150ms)}
+body:not(.opened) .seg{opacity:0;transform:scale(.94)}
+body.opened .seg:hover,body.opened .seg.on,body.opened .stage.focus .seg{transition-delay:0s}
+
+.m-open,.m-back{background:none;border:1px solid var(--rule);font-family:var(--sans);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-70);cursor:pointer;padding:11px 21px;
+  transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
+.m-open{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.m-open:hover{background:var(--copper-deep);border-color:var(--copper-deep)}
+.m-back{margin:18px auto 0;border-color:transparent;padding:8px 12px}
+.m-back:hover{color:var(--ink);border-color:var(--rule)}
+body:not(.opened) .ro-idle .hint,body:not(.opened) .legend,body:not(.opened) .m-back{display:none}
+body.opened .m-open{display:none}
 .orbit{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:105%;height:105%;border-radius:50%;
   border:1px dashed rgba(65,30,6,.15);animation:spin 72s linear infinite}
 .orbit::after{content:"";position:absolute;top:-4px;left:50%;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--copper);opacity:.5}
@@ -108,11 +153,21 @@ svg.rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .x:hover{background:var(--ink);color:var(--cream);transform:rotate(90deg)}
 
 /* ---------- responsive ---------- */
-@media (max-width:1100px){.stage{--s:min(52vh,70vw,480px)}}
+@media (max-width:1100px){.stage{--s:min(62vh,76vw,580px)}}
 
 @media (max-width:760px){
-  .stage{--s:min(70vw,360px)}
+  .stage{--s:min(90vw,440px)}
   .orbit{display:none}
+  /* on a phone the words need more height than a circle gives them, so the
+     rings stretch into tall ovals */
+  .mandala{--m:94vw}
+  .m-outer{padding:78px 0 84px}
+  .m-mid{width:92%;padding:80px 0 80px;margin:22px 0}
+  .m-core{width:94%;padding:58px 0 62px;margin:20px 0}
+  .m-txt{font-size:15.5px}
+  .m-core p{font-size:16px;max-width:80%}
+  .m-outer>.m-txt{max-width:64%}
+  .m-mid>.m-txt{max-width:62%}
   .seg .lbl{font-size:12px;letter-spacing:.06em}
   .core{width:40%;height:40%}
   .front .nm{font-size:calc(var(--s)*.058)}
@@ -149,7 +204,7 @@ svg.rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 }
 
 @media (max-width:360px){
-  .stage{--s:min(82vw,290px)}
+  .stage{--s:min(92vw,330px)}
   .seg .lbl{font-size:13px;letter-spacing:.02em}
   .legend{gap:6px 14px}
   .legend span{font-size:9.5px;letter-spacing:.1em}
