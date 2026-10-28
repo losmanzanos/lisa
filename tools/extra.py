@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Contact page, 404, and the sitewide static files."""
+from urllib.parse import urlparse
 import os, datetime, html
 from build import SITE, NAME, WHO, TEL, MAIL
 
@@ -42,7 +43,7 @@ FORM = """<form class="form" id="contactForm" novalidate>
 
 PAGES = [
     dict(
-        slug="contact",
+        slug="contact", ring="contact",
         title="Reach Out | Book a Free Consult | Brilliantly Sane",
         desc="Book a free twenty minute consult with Lisa Wallace, LPC. Call 970-368-9185, email lisa@brilliantlysane.org, or use the form.",
         eyebrow="Ring 01 · The Practical",
@@ -66,7 +67,7 @@ PAGES = [
                   side="""<p>Telehealth across Colorado. In person in Boulder when it works out.</p><p><a class="tlink" href="../faq/">Read the questions first</a></p>"""),
     ),
     dict(
-        slug="", file="404.html", depth=0,
+        slug="", file="404.html", depth=urlparse(SITE).path.rstrip("/") + "/",
         title="Page not found | Brilliantly Sane",
         desc="That page isn't here. Links to the rest of the site, and a way to get in touch.",
         eyebrow="404",

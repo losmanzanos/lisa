@@ -334,7 +334,7 @@ P.append(dict(
                            "url": SITE + "/journal/" + p["slug"] + "/"} for p in POSTS]}],
     sheets=[dict(h2="Posts", note="Three so far.",
                  body='<ul class="index-list">' + "".join(
-                     f"""<li><a href="{p['slug']}/"><span class="meta">{datetime.date.fromisoformat(p['date']).strftime('%B %-d, %Y')}<br>{p['read']}</span><span><h3>{p['title']}</h3><p>{p['desc']}</p></span></a></li>"""
+                     f"""<li><a href="{p['slug']}/"><span class="meta">{datetime.date.fromisoformat(p['date']).strftime('%B %-d, %Y')}<span class="sep"></span>{p['read']}</span><span><h3>{p['title']}</h3><p>{p['desc']}</p></span></a></li>"""
                      for p in reversed(POSTS)) + "</ul>")],
 ))
 

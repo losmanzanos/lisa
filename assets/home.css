@@ -15,7 +15,7 @@
 .stage{grid-area:stage}
 .mid-top{grid-area:mtop;align-self:start;margin-top:calc(var(--s0)*.30);text-align:right;justify-self:end}
 .mid-bot{grid-area:mbot;align-self:end;margin-bottom:calc(var(--s0)*.30);text-align:left;justify-self:start}
-.mid-words{--s0:min(76vh,58vw,740px);position:relative;max-width:270px;margin-left:0;margin-right:0;
+.mid-words{--s0:min(76vh,58vw,740px,calc(100vw - 640px));position:relative;max-width:270px;margin-left:0;margin-right:0;
   font-family:var(--serif);font-style:italic;font-weight:500;font-size:19px;line-height:1.38;color:#4A3B66;text-wrap:balance}
 .mid-words::before{content:"";display:block;width:56px;height:1px;background:#B4B2D6;margin:0 0 14px}
 .mid-words::after{content:"";position:absolute;top:-3px;width:7px;height:7px;border-radius:50%;background:#B4B2D6}
@@ -24,7 +24,7 @@
 .mid-bot::after{left:-3px}
 .center-words{max-width:44ch;margin:0 auto 18px;font-family:var(--serif);font-size:20px;line-height:1.45;color:var(--ink);text-wrap:pretty}
 /* --c is the center disc: 148 of the 504 units the three rings span */
-.stage{--s:min(76vh,58vw,740px);--c:calc(var(--s)*.2937);position:relative;width:var(--s);height:var(--s)}
+.stage{--s:min(76vh,58vw,740px,calc(100vw - 640px));--c:calc(var(--s)*.2937);position:relative;width:var(--s);height:var(--s)}
 
 /* ring 00, Lisa's words */
 .words-ring{pointer-events:none;transition:opacity .4s var(--ease)}
@@ -67,13 +67,35 @@ svg.rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
   box-shadow:0 20px 44px -20px rgba(65,30,6,.55),inset 0 0 0 1px rgba(255,255,255,.55)}
 .front{background:var(--stone)}
 .front .portrait{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.86) contrast(.97)}
-.front .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(65,30,6,0) 42%,rgba(65,30,6,.55) 72%,rgba(50,22,4,.86) 100%)}
-.front .plate{position:relative;margin-top:auto;color:#fff;text-shadow:0 1px 14px rgba(65,30,6,.55)}
+.front .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(65,30,6,0) 34%,rgba(65,30,6,.5) 62%,rgba(50,22,4,.82) 100%)}
+.front .plate{position:relative;margin-top:auto;margin-bottom:9%;color:#fff;text-shadow:0 1px 14px rgba(65,30,6,.55)}
 .front .nm{display:block;font-family:var(--serif);font-size:calc(var(--c)*.124);line-height:1}
-.front .rl{display:block;font-size:calc(var(--c)*.042);letter-spacing:.2em;text-transform:uppercase;opacity:.92;margin-top:7px}
+.front .rl{display:block;font-size:calc(var(--c)*.042);letter-spacing:.16em;text-transform:uppercase;opacity:.92;margin-top:7px}
 .back{background:linear-gradient(160deg,#F5F1ED,var(--stone));transform:rotateY(180deg);color:var(--ink)}
 .back .q{font-family:var(--serif);font-style:italic;font-size:calc(var(--c)*.084);line-height:1.32;max-width:92%}
 .back .go{margin-top:calc(var(--c)*.065);font-size:calc(var(--c)*.0446);letter-spacing:.16em;text-transform:uppercase;color:var(--copper-deep)}
+
+/* ---------- Lisa's sketch as a sequence (phones only) ---------- */
+.sketch{display:none;position:relative;z-index:10;padding:8px var(--gut) clamp(46px,10vw,64px);text-align:center}
+.sketch .kicker{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--copper);margin:0 0 30px}
+.sketch ol{list-style:none;margin:0 auto;padding:0;max-width:34ch;position:relative}
+.sk{position:relative}
+.sk:not(:last-child)::after{content:"";display:block;width:1px;height:34px;margin:18px auto;background:linear-gradient(var(--rule),rgba(65,30,6,0))}
+.sk .ri{display:block;width:34px;height:34px;margin:0 auto 14px}
+.ri circle{fill:none;stroke:rgba(65,30,6,.16)}
+.ri .r0{stroke-width:3.5}
+.ri .r1{stroke-width:4.5}
+.ri .r2{fill:rgba(65,30,6,.12);stroke:none}
+.ri .r0.lit{stroke:#C9B6A6}
+.ri .r1.lit{stroke:#A9A6D8}
+.ri .r2.lit{fill:#6E5A4D}
+.sk p{margin:0;font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.4;text-wrap:balance}
+.sk0 p{color:#5E4636}
+.sk1 p{color:#4A3B66;font-weight:500}
+.sk2 p{font-style:normal;font-size:20px;line-height:1.45;color:var(--ink);text-wrap:pretty;
+  background:radial-gradient(ellipse at 50% 40%,#F7F3EF,#E9E1DA);padding:30px 26px;border-radius:28px}
+.sk{transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.sketch.js .sk:not(.in){opacity:0;transform:translateY(14px)}
 
 /* ---------- arrival and linked hover ----------
    On load the words ring turns into place, the doors open outward middle
@@ -175,25 +197,13 @@ svg.rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 @media (max-width:760px){
   .stage{--s:min(90vw,440px)}
   .orbit{display:none}
-  /* phones drop ring 00 and set Lisa's words above and below instead */
+  /* Phones: the wheel comes straight after the headline, and Lisa's words
+     follow as their own walk from the edge to the center and back out. */
   .stage{--c:calc(var(--s)*.40)}
-  .words-ring{display:none}
-  .words{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal}
-  .words-top{margin-bottom:24px}
-  .words-bot{margin-top:28px}
   .stage-wrap{display:flex;flex-direction:column;align-items:center}
-  .stage-wrap>.words-top{order:1}
-  .stage-wrap>.mid-top{order:2}
-  .stage-wrap>.stage{order:3}
-  .stage-wrap>.mid-bot{order:4}
-  .stage-wrap>.words-bot{order:5}
-  .mid-words{max-width:30ch;font-size:17px;text-align:center;margin:0}
-  .mid-words::after{display:none}
-  .mid-words::before{margin:0 auto 12px;width:40px}
-  .mid-top{margin-bottom:26px}
-  .mid-bot{margin-top:26px}
-  .words-bot{margin-top:22px}
-  .center-words{font-size:18px}
+  .words-ring,.mid-words,.center-words{display:none}
+  .words{display:none}
+  .sketch{display:block}
   .seg .lbl{font-size:12px;letter-spacing:.06em}
   .front .nm{font-size:calc(var(--c)*.145)}
   .front .rl{font-size:calc(var(--c)*.0525)}

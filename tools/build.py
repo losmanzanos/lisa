@@ -32,8 +32,10 @@ FOOT_LINKS = [("about/", "About Lisa"), ("approach/", "Therapeutic approach"),
 
 
 def rel(depth, target):
-    """Relative href from a page at `depth` folders deep to a root-relative target."""
-    up = "../" * depth
+    """Relative href from a page at `depth` folders deep to a root-relative target.
+       A string depth is a site root path instead, for pages like the 404 that
+       get served at whatever URL was asked for."""
+    up = depth if isinstance(depth, str) else "../" * depth
     if target in ("", "/"):
         return up if up else "./"
     return up + target.lstrip("/")
@@ -124,6 +126,7 @@ def header(p):
   <button class="menu-btn" aria-expanded="false" aria-controls="sitenav">Menu</button>
   <nav class="site-nav" id="sitenav" aria-label="Main">
 {links}      <a class="cta" href="{rel(d, 'contact/')}">Reach out</a>
+      <p class="nav-foot"><a href="tel:+1{TEL.replace('-', '')}">{TEL}</a><a href="mailto:{MAIL}">{MAIL}</a></p>
   </nav>
 </header>
 """
@@ -227,7 +230,7 @@ RING_OUTER = [("contact/", "Sessions", "#63554D"), ("rates/", "Rates", "#5A4C44"
               ("approach/", "Approach", "#51443C"), ("faq/", "Questions", "#483C35")]
 RING_MID = [("young-adult-therapy/", "Young adults", "#CFCDE9"), ("work-with/", "Introspective", "#C6C4E4"),
             ("lgbtqia-therapy/", "LGBTQIA+", "#BDBBDD"), ("religious-trauma-therapy/", "Religious trauma", "#B4B2D6")]
-RING_CORE = ("about/", "Lisa", "#CABFB6")
+RING_CORE = ("about/", "About Me", "#CABFB6")
 _CX = _CY = 200
 
 
@@ -242,6 +245,16 @@ def _annulus(a0, a1, ri, ro):
     x3, y3 = _pol(ri, a1); x4, y4 = _pol(ri, a0)
     return (f"M{x1:.2f} {y1:.2f}A{ro} {ro} 0 {la} 1 {x2:.2f} {y2:.2f}"
             f"L{x3:.2f} {y3:.2f}A{ri} {ri} 0 {la} 0 {x4:.2f} {y4:.2f}Z")
+
+
+def _text_arc(a0, a1, r):
+    """Arc for a curved label, reversed on the lower half so text stays upright."""
+    m = ((a0 + a1) / 2) % 360
+    la = 1 if (a1 - a0) > 180 else 0
+    x1, y1 = _pol(r, a0); x2, y2 = _pol(r, a1)
+    if 0 < m < 180:
+        return f"M{x2:.2f} {y2:.2f}A{r} {r} 0 {la} 0 {x1:.2f} {y1:.2f}"
+    return f"M{x1:.2f} {y1:.2f}A{r} {r} 0 {la} 1 {x2:.2f} {y2:.2f}"
 
 
 def ringnav(p):
@@ -262,13 +275,16 @@ def ringnav(p):
             a0 = -90 + i * step + gap
             a1 = -90 + (i + 1) * step - gap
             on = (key == active)
-            mid = (a0 + a1) / 2
-            dx, dy = _pol((rIn + rOut) / 2, mid)
-            dot = f'<circle class="pip" cx="{dx:.1f}" cy="{dy:.1f}" r="3.4"/>' if on else ""
+            pid = f"wf-{cls}{i}"
+            tr = (rIn + rOut) / 2 + (4 if cls == "o" else 3)
+            fs = "13" if cls == "o" else "11.5"
             seg_html.append(
                 f'<a href="{rel(d, href)}" class="nseg {cls}{" on" if on else ""}" data-k="{key}" '
                 f'aria-label="{label}"><title>{label}</title>'
-                f'<path d="{_annulus(a0, a1, rIn, rOut)}" fill="{fill}"/>{dot}</a>')
+                f'<path d="{_annulus(a0, a1, rIn, rOut)}" fill="{fill}"/>'
+                f'<path id="{pid}" d="{_text_arc(a0, a1, tr)}" fill="none"/>'
+                f'<text class="nlbl" font-size="{fs}" text-anchor="middle" dy="0.34em">'
+                f'<textPath href="#{pid}" startOffset="50%">{label}</textPath></text></a>')
             items.append((cls, key, href, label, on))
 
     band_of(RING_OUTER, 132, 192, 2.2, "o")
@@ -281,6 +297,8 @@ def ringnav(p):
             f'<circle cx="200" cy="200" r="74" fill="#EDE7E1"/>'
             f'<image href="{a}img/center-peak.jpg" x="126" y="126" width="148" height="148" '
             f'clip-path="circle(74px at 74px 74px)" preserveAspectRatio="xMidYMid slice"/>'
+            f'<circle class="cveil" cx="200" cy="200" r="74" fill="url(#wfVeil)"/>'
+            f'<text class="clbl" x="200" y="236" text-anchor="middle">About Me</text>'
             f'<circle cx="200" cy="200" r="74" fill="none" stroke="rgba(65,30,6,.18)"/></a>')
     items.append(("c", "about", chref, clabel, con))
 
@@ -295,6 +313,7 @@ def ringnav(p):
     <h2 id="wayfind-h">Where this sits</h2>
     <div class="wayfind-in">
       <svg class="ringnav" viewBox="0 0 400 400" role="group" aria-label="Site map as concentric rings">
+        <defs><linearGradient id="wfVeil" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#411E06" stop-opacity="0"/><stop offset="1" stop-color="#321604" stop-opacity=".78"/></linearGradient></defs>
         {''.join(seg_html)}
         {core}
       </svg>

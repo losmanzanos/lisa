@@ -336,6 +336,16 @@
   document.getElementById('closeBtn').addEventListener('click', closePanel);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
 
+  /* phones: Lisa's words rise in one at a time as they scroll into view */
+  var sketch = document.querySelector('.sketch');
+  if (sketch && 'IntersectionObserver' in window) {
+    sketch.classList.add('js');
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    sketch.querySelectorAll('.sk').forEach(function (li) { io.observe(li); });
+  }
+
   /* logo resets the view */
   var brand = document.getElementById('brand');
   if (brand) {
