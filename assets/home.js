@@ -8,7 +8,7 @@
       eyebrow: 'Ring 01 · The Practical',
       segs: [
         {
-          fill: '#63554D', label: 'Sessions', href: '/contact/',
+          fill: '#63554D', label: 'Sessions', href: 'contact/',
           title: 'Mostly from your own couch.',
           tease: 'Telehealth across Colorado. Fifty five minutes. In person in Boulder when it makes sense.',
           quote: '"Most people do their best work somewhere they already feel like themselves."',
@@ -22,7 +22,7 @@
           cta: 'Set up a consult', note: 'Free 20 minute consult'
         },
         {
-          fill: '#5A4C44', label: 'Rates', href: '/rates/',
+          fill: '#5A4C44', label: 'Rates', href: 'rates/',
           title: 'Said out loud, up front.',
           tease: '$175 a session, CO Access Medicaid accepted, and a free call before you commit to anything.',
           quote: '"Money is one more place we rehearse what we think we deserve."',
@@ -36,7 +36,7 @@
           cta: 'Rates and payment', note: 'Updated for 2026'
         },
         {
-          fill: '#51443C', label: 'Approach', href: '/approach/',
+          fill: '#51443C', label: 'Approach', href: 'approach/',
           title: 'Contemplative, then specific.',
           tease: 'Naropa trained. IFS, EMDR and mindfulness, used when they fit rather than on a schedule.',
           quote: '"Contemplative psychotherapy starts from the premise that you are already sane."',
@@ -50,7 +50,7 @@
           cta: 'How I work', note: 'Collaborative, not one size fits all'
         },
         {
-          fill: '#483C35', label: 'Questions', href: '/faq/',
+          fill: '#483C35', label: 'Questions', href: 'faq/',
           title: 'The ones people ask on the call.',
           tease: 'What a first session is like, how long this takes, and what happens if we are not a fit.',
           quote: '"Not knowing what to ask is a reasonable place to start."',
@@ -70,7 +70,7 @@
       eyebrow: 'Ring 02 · Who This Is For',
       segs: [
         {
-          fill: '#CFCDE9', label: 'Young Adults', href: '/young-adult-therapy/',
+          fill: '#CFCDE9', label: 'Young Adults', href: 'young-adult-therapy/',
           title: 'Finding your footing.',
           tease: 'Sixteen to twenty four, when the questions get big and the vocabulary has not caught up.',
           quote: '"You are not behind. You are early, and nobody told you that."',
@@ -83,7 +83,7 @@
           cta: 'Therapy for young adults', note: 'Individuals, not couples'
         },
         {
-          fill: '#C6C4E4', label: 'Introspective', href: '/work-with/',
+          fill: '#C6C4E4', label: 'Introspective', href: 'work-with/',
           title: 'You already look inward.',
           tease: 'You journal, you notice, you have the words. What is missing is rhythm and a second read.',
           quote: '"You have the material. What you want is a way to read it."',
@@ -96,7 +96,7 @@
           cta: 'Who I work with', note: 'Past ambivalence, about 51% in'
         },
         {
-          fill: '#BDBBDD', label: 'LGBTQIA+', href: '/lgbtqia-therapy/',
+          fill: '#BDBBDD', label: 'LGBTQIA+', href: 'lgbtqia-therapy/',
           title: 'No translation tax.',
           tease: 'WPATH trained, queer myself, three years at an LGBTQIA+ practice. You can skip the explaining.',
           quote: '"You should not have to teach your therapist who you are before you can use the hour."',
@@ -109,7 +109,7 @@
           cta: 'Queer and gender affirming therapy', note: 'Boulder and statewide'
         },
         {
-          fill: '#B4B2D6', label: 'Religious Trauma', href: '/religious-trauma-therapy/',
+          fill: '#B4B2D6', label: 'Religious Trauma', href: 'religious-trauma-therapy/',
           title: 'Faith, taken apart.',
           tease: 'Deconstruction, reconstruction, and the long middle where you are not sure which one you are doing.',
           quote: '"Leaving a belief system is not the same as leaving yourself."',
@@ -137,7 +137,7 @@
       ['The arrangement', 'You are in the driver seat. I have a map and the occasional suggestion.'],
       ['The qualification', 'I have walked this. That is most of what I have to offer.']
     ],
-    cta: 'More about Lisa', href: '/about/', note: 'Naropa University, 2017'
+    cta: 'More about Lisa', href: 'about/', note: 'Naropa University, 2017'
   };
 
   /* ---------- geometry ---------- */
@@ -181,7 +181,8 @@
       var g = el('g', {
         'class': 'seg ' + ring.cls, tabindex: '0', role: 'link', 'data-id': id,
         'aria-label': s.label + '. ' + s.title,
-        style: '--tx:' + (Math.cos(rad) * 7).toFixed(2) + 'px;--ty:' + (Math.sin(rad) * 7).toFixed(2) + 'px'
+        style: '--tx:' + (Math.cos(rad) * 7).toFixed(2) + 'px;--ty:' + (Math.sin(rad) * 7).toFixed(2) + 'px;' +
+               '--i:' + (ring.cls === 'out' ? i + 4 : i)
       });
       g.appendChild(el('path', {
         'class': 'slice', d: annulus(a0, a1, ring.rIn, ring.rOut), fill: s.fill,
@@ -237,7 +238,7 @@
     document.getElementById('pIntro').textContent = d.intro;
     var cta = document.getElementById('pCta');
     cta.textContent = d.cta + ' →';
-    cta.setAttribute('href', d.href || '/contact/');
+    cta.setAttribute('href', d.href || 'contact/');
     document.getElementById('pNote').textContent = d.note || '';
     document.getElementById('pBits').innerHTML = d.bits.map(function (b) {
       return '<li><b>' + b[0] + '</b><span class="txt">' + b[1] + '</span></li>';
@@ -262,9 +263,41 @@
 
   var touch = window.matchMedia('(hover:none)').matches;
   if (touch) {
-    var hint = document.querySelector('.hint');
+    var hint = document.getElementById('hint');
     if (hint) hint.textContent = 'Tap a segment to open it';
   }
+
+  /* ---------- the words, then the ring ----------
+     First visit shows Lisa's own words set in the rings. Opening it reveals
+     the clickable ring underneath; the choice is kept for the visit so the
+     back button from an inner page lands on the ring, not the words again. */
+  var mandala = document.getElementById('mandala');
+  var opened = false;
+  try { opened = sessionStorage.getItem('bs-open') === '1'; } catch (e) {}
+
+  function setOpen(on, moveFocus) {
+    opened = on;
+    document.body.classList.toggle('opened', on);
+    if (on) { mandala.setAttribute('inert', ''); stage.removeAttribute('inert'); }
+    else { stage.setAttribute('inert', ''); mandala.removeAttribute('inert'); clearRead(); }
+    mandala.setAttribute('aria-hidden', on ? 'true' : 'false');
+    stage.setAttribute('aria-hidden', on ? 'false' : 'true');
+    try { sessionStorage.setItem('bs-open', on ? '1' : '0'); } catch (e) {}
+    if (on && moveFocus !== undefined && ready) {
+      var top = stage.getBoundingClientRect().top;
+      if (top < 0 || top > window.innerHeight * .5) stage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    if (moveFocus) {
+      var t = on ? stage.querySelector('.seg') : document.getElementById('mOpen');
+      if (t) setTimeout(function () { t.focus({ preventScroll: true }); }, 450);
+    }
+  }
+  var ready = false;
+  setOpen(opened);
+  requestAnimationFrame(function () { document.body.classList.add('ready'); ready = true; });
+  mandala.addEventListener('click', function () { setOpen(true, false); });
+  document.getElementById('mOpen').addEventListener('click', function () { setOpen(true, true); });
+  document.getElementById('mBack').addEventListener('click', function () { setOpen(false, true); });
 
   function wire(node, data) {
     node.addEventListener('mouseenter', function () { if (!touch) showRead(data); });
@@ -299,6 +332,7 @@
       document.querySelectorAll('.seg,.core').forEach(function (o) { o.classList.remove('on'); });
       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
       clearRead();
+      setOpen(false, false);
       mark.classList.remove('reset');
       void mark.offsetWidth;
       mark.classList.add('reset');
