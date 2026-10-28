@@ -181,8 +181,7 @@
       var g = el('g', {
         'class': 'seg ' + ring.cls, tabindex: '0', role: 'link', 'data-id': id,
         'aria-label': s.label + '. ' + s.title,
-        style: '--tx:' + (Math.cos(rad) * 7).toFixed(2) + 'px;--ty:' + (Math.sin(rad) * 7).toFixed(2) + 'px;' +
-               '--i:' + (ring.cls === 'out' ? i + 4 : i)
+        style: '--tx:' + (Math.cos(rad) * 7).toFixed(2) + 'px;--ty:' + (Math.sin(rad) * 7).toFixed(2) + 'px'
       });
       g.appendChild(el('path', {
         'class': 'slice', d: annulus(a0, a1, ring.rIn, ring.rOut), fill: s.fill,
@@ -205,6 +204,49 @@
     });
   });
   svg.appendChild(el('circle', { 'class': 'gapline', cx: CX, cy: CY, r: 129, fill: 'none', stroke: 'rgba(65,30,6,.10)', 'stroke-width': '1' }));
+
+  /* ---------- ring 00: Lisa's words ----------
+     An outer band that is read rather than clicked, leading into the two
+     rings of doors. Her two sentences run along the top and bottom arcs.
+     Phones get the same sentences as plain text above and below instead,
+     since curved type that long would be too small to read there. */
+  var WORDS = { rIn: 201, rOut: 245, top: 'Our actual agency and power lies in our ability to choose how we want to relate to ourselves and the world.',
+                bot: 'True healing begins when we recognize what is in our control and that starts with the relationship with ourselves.' };
+  var wg = el('g', { 'class': 'words-ring', 'aria-hidden': 'true' });
+  var wr = (WORDS.rIn + WORDS.rOut) / 2;
+  wg.appendChild(el('circle', { 'class': 'band', cx: CX, cy: CY, r: wr, fill: 'none', 'stroke-width': WORDS.rOut - WORDS.rIn }));
+  wg.appendChild(el('circle', { 'class': 'edge', cx: CX, cy: CY, r: WORDS.rOut, fill: 'none' }));
+  [[192, 348, WORDS.top, 'wt-top'], [12, 168, WORDS.bot, 'wt-bot']].forEach(function (w) {
+    defs.appendChild(el('path', { id: w[3], d: textArc(w[0], w[1], wr) }));
+    var t = el('text', { 'class': 'wtxt', 'font-size': '12.5', 'text-anchor': 'middle', dy: '0.32em' });
+    var tp = el('textPath', { href: '#' + w[3], startOffset: '50%' });
+    tp.setAttribute('xlink:href', '#' + w[3]);
+    tp.textContent = w[2];
+    t.appendChild(tp);
+    wg.appendChild(t);
+  });
+  [0, 180].forEach(function (deg) {
+    var d = pol(wr, deg);
+    wg.appendChild(el('circle', { 'class': 'pip', cx: d[0], cy: d[1], r: '2.4' }));
+  });
+  svg.insertBefore(wg, svg.firstChild.nextSibling);
+
+  /* shrink each sentence to fit its arc once the font has loaded */
+  function fitWords() {
+    wg.querySelectorAll('.wtxt').forEach(function (t) {
+      t.setAttribute('font-size', '12.5');
+      var room = Math.PI * wr * (156 / 180) * 0.97, len = t.getComputedTextLength();
+      if (len > room) t.setAttribute('font-size', (12.5 * room / len).toFixed(2));
+    });
+  }
+  var compact = window.matchMedia('(max-width:760px)');
+  function frame() {
+    svg.setAttribute('viewBox', compact.matches ? '0 0 400 400' : '-52 -52 504 504');
+    if (!compact.matches) fitWords();
+  }
+  frame();
+  if (compact.addEventListener) compact.addEventListener('change', frame);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(frame);
 
   /* ---------- interaction ---------- */
   var stage = document.getElementById('stage');
@@ -267,37 +309,6 @@
     if (hint) hint.textContent = 'Tap a segment to open it';
   }
 
-  /* ---------- the words, then the ring ----------
-     First visit shows Lisa's own words set in the rings. Opening it reveals
-     the clickable ring underneath; the choice is kept for the visit so the
-     back button from an inner page lands on the ring, not the words again. */
-  var mandala = document.getElementById('mandala');
-  var opened = false;
-  try { opened = sessionStorage.getItem('bs-open') === '1'; } catch (e) {}
-
-  function setOpen(on, moveFocus) {
-    opened = on;
-    document.body.classList.toggle('opened', on);
-    if (on) { mandala.setAttribute('inert', ''); stage.removeAttribute('inert'); }
-    else { stage.setAttribute('inert', ''); mandala.removeAttribute('inert'); clearRead(); }
-    mandala.setAttribute('aria-hidden', on ? 'true' : 'false');
-    stage.setAttribute('aria-hidden', on ? 'false' : 'true');
-    try { sessionStorage.setItem('bs-open', on ? '1' : '0'); } catch (e) {}
-    if (on && moveFocus !== undefined && ready) {
-      var top = stage.getBoundingClientRect().top;
-      if (top < 0 || top > window.innerHeight * .5) stage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    if (moveFocus) {
-      var t = on ? stage.querySelector('.seg') : document.getElementById('mOpen');
-      if (t) setTimeout(function () { t.focus({ preventScroll: true }); }, 450);
-    }
-  }
-  var ready = false;
-  setOpen(opened);
-  requestAnimationFrame(function () { document.body.classList.add('ready'); ready = true; });
-  mandala.addEventListener('click', function () { setOpen(true, false); });
-  document.getElementById('mOpen').addEventListener('click', function () { setOpen(true, true); });
-  document.getElementById('mBack').addEventListener('click', function () { setOpen(false, true); });
 
   function wire(node, data) {
     node.addEventListener('mouseenter', function () { if (!touch) showRead(data); });
@@ -332,7 +343,6 @@
       document.querySelectorAll('.seg,.core').forEach(function (o) { o.classList.remove('on'); });
       if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
       clearRead();
-      setOpen(false, false);
       mark.classList.remove('reset');
       void mark.offsetWidth;
       mark.classList.add('reset');
