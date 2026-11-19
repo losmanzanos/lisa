@@ -12,9 +12,9 @@
           title: 'Mostly from your own couch.',
           tease: 'Telehealth across Colorado. Fifty five minutes. In person in Boulder when it makes sense.',
           quote: '"Most people do their best work somewhere they already feel like themselves."',
-          intro: 'I see clients by video anywhere in Colorado. Sessions run fifty five minutes, usually weekly at the start, because early momentum matters more than frequency does later. If you are in or near Boulder and would rather sit in a room together, ask.',
+          intro: 'I see clients by video anywhere in Colorado. Sessions run fifty five minutes, usually weekly at the start, because early momentum matters more than frequency does later. If you are in or near Boulder and would rather be together in person, we can do that too.',
           bits: [
-            ['Format', 'Video statewide. In person in Boulder some weeks.'],
+            ['Format', 'Video statewide. In person in Boulder some days.'],
             ['Length', 'Fifty five minutes.'],
             ['Starting out', 'Weekly to begin, then we adjust.'],
             ['First step', 'A free twenty minute call.']
@@ -26,12 +26,12 @@
           title: 'Said out loud, up front.',
           tease: '$175 a session, CO Access Medicaid accepted, and a free call before you commit to anything.',
           quote: '"Money is one more place we rehearse what we think we deserve."',
-          intro: 'My fee is $175 for a fifty five minute session, and I accept CO Access Medicaid. If cost is the thing standing between you and starting, say so on the consult call. I would rather have that conversation in week one than watch someone quietly disappear in week four.',
+          intro: 'My fee is $175 for a fifty five minute session, and I accept CO Access Medicaid. If cost is the thing standing between you and starting, let me know on the consult call. I hold a couple of spots open for clients who need a sliding scale.',
           bits: [
             ['Session fee', '$175 for fifty five minutes.'],
             ['Insurance', 'CO Access Medicaid accepted.'],
             ['Consult', 'Twenty minutes, free, no obligation.'],
-            ['If money is tight', 'Tell me on the call and I will be straight with you.']
+            ['If money is tight', 'Tell me on the call and I will see if we are a good fit.']
           ],
           cta: 'Rates and payment', note: 'Updated for 2026'
         },

@@ -47,7 +47,7 @@ P.append(dict(
     band=dict(quote="I can help you fall in love with yourself only insofar as I've done it myself.",
               by="Lisa Wallace, LPC",
               img="A still alpine lake at dawn with a snow covered peak reflected on the surface and dark conifers along both shores.",
-              side="""<p>Licensed Professional Counselor in Colorado. Telehealth statewide, in person in Boulder some weeks.</p><p><a class="tlink" href="../contact/">Book a free consult</a></p>"""),
+              side="""<p>Licensed Professional Counselor in Colorado. Telehealth statewide, in person in Boulder some days.</p><p><a class="tlink" href="../contact/">Book a free consult</a></p>"""),
 ))
 
 # ---------------------------------------------------------------- approach
@@ -134,7 +134,7 @@ P.append(dict(
              "areaServed": {"@type": "State", "name": "Colorado"},
              "audience": {"@type": "PeopleAudience", "suggestedMinAge": 16, "suggestedMaxAge": 24}}],
     facts=[("Fee", '$175<small>Fifty five minutes. CO Access Medicaid accepted.</small>'),
-           ("Format", 'Video<small>Anywhere in Colorado. In person in Boulder some weeks.</small>'),
+           ("Format", 'Video<small>Anywhere in Colorado. In person in Boulder some days.</small>'),
            ("First step", 'Free consult<small>Twenty minutes. The young person is welcome on it.</small>')],
     sheets=[
         dict(h2="This stretch of life", note="Sixteen to twenty four.",
@@ -233,7 +233,7 @@ P.append(dict(
 <li><b>Individual session</b><span class="val"><span class="num">$175<small>55 minutes</small></span></span></li>
 <li><b>First consult</b><span class="val"><span class="num">Free<small>20 minutes, by phone or video</small></span></span></li>
 <li><b>Insurance</b><span class="val"><p>I accept CO Access Medicaid.</p><p>If you have out of network benefits through another plan, ask me on the consult call and I'll tell you what documentation I can provide.</p></span></li>
-<li><b>If cost is the problem</b><span class="val"><p>Say so on the call. I'd rather have that conversation in week one than watch someone quietly disappear in week four.</p></span></li>
+<li><b>If cost is the problem</b><span class="val"><p>Let me know on the consult call. I hold a couple of spots open for clients who need a sliding scale.</p></span></li>
 </ul>
 <!-- TODO confirm with Lisa before launch: cancellation window, accepted payment methods, whether superbills are issued -->"""),
         dict(h2="Why it's on the website", note="Most practices make you ask.",
@@ -241,7 +241,7 @@ P.append(dict(
 <p>So: $175. If that works, good. If it doesn't, tell me on the free call and we'll talk about it like adults.</p>"""),
         dict(h2="What a session is", note="Fifty five minutes, usually weekly at first.",
              body="""<p>Sessions run fifty five minutes. Most people start weekly, because early momentum matters more than frequency does six months in. We adjust once the work finds its own rhythm.</p>
-<p>Almost everything is by video, anywhere in Colorado. If you're in or near Boulder and would rather be in a room, ask me, because some weeks that's possible.</p>"""),
+<p>Almost everything is by video, anywhere in Colorado. If you're in or near Boulder and would rather be together in person, we can do that too. Some days that's possible.</p>"""),
     ],
 ))
 
